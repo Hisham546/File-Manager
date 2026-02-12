@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { View, TouchableOpacity, Text, FlatList } from "react-native";
+import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
 import styles from "./styles";
 import { PermissionsAndroid, Platform } from 'react-native';
 import RNFS from 'react-native-fs';
+import { formatFileSize } from "../../../utilities/helper";
+import ImageViewerModal from "../../../components/imageViewer";
 
 
 
@@ -12,11 +14,11 @@ export default function InsideFolder({ route }) {
 
     const item = route.params.item
 
-    const [files, setFiles] = useState({})
+    const [files, setFiles] = useState([])
+    const [viewerVisible, setViewerVisible] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
-
-
-console.log(item.path,'...path')
+    console.log(item.path, '...path')
 
     useEffect(() => {
         const getFolderContents = async () => {
@@ -33,7 +35,7 @@ console.log(item.path,'...path')
                 }));
 
                 console.log(formatted, '...contents');
-               // setFiles(formatted);
+                setFiles(formatted);
 
             } catch (error) {
                 console.error('Error reading directory:', error);
@@ -45,40 +47,59 @@ console.log(item.path,'...path')
         }
     }, [item?.path]);
 
-    //     const getFiles = async (folderPath) => {
-    //         try {
-    //             const items = await RNFS.readDir(folderPath);
 
-    //             const formatted = items.map(item => ({
-    //                 name: item.name,
-    //                 path: item.path,
-    //                 isFile: item.isFile(),
-    //                 isDirectory: item.isDirectory(),
-    //                 size: item.size,
-    //                 modified: item.mtime,
-    //             }));
-    // console.log(formatted,'...formatted')
-    //             setFiles(formatted);
-    //         } catch (error) {
-    //             console.log('Error reading folder:', error);
-    //         }
-    //     };
-
-    //     useEffect(() => {
-    //         getFiles(item.path);
-    //     }, []);
-
-
-
+    const imageFiles = files
+        ?.filter(file => file.isFile && file.name.match(/\.(jpg|jpeg|png)$/i))
+        .map(file => ({
+            uri: `file://${file.path}`,
+        }));
 
     return (
 
         <View style={styles.containerStyle}>
+            <View style={styles.topView}></View>
 
-            <Text>homescreen</Text>
-            <View>
+            <View style={styles.contentView}>
+                <FlatList
+                    data={files}
+                    keyExtractor={(item) => item.path}
+                    renderItem={({ item, index }) => (
+                        <TouchableOpacity
+                            onPress={() => {
+                                setSelectedIndex(index);
+                                setViewerVisible(true);
+                            }}
+                            style={styles.imageView}>
+                            {item.isFile && (
+                                <Image
+                                    source={{ uri: `file://${item.path}` }}
+                                    style={styles.image}
+                                    resizeMode="contain"
+                                />
+                            )}
 
+                            <View>
+                                <Text>{item.name}</Text>
+                                {item.isFile && (
+                                    <Text>{formatFileSize(item.size)}</Text>
+                                )}
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                    ListEmptyComponent={
+                        <Text style={{ textAlign: 'center', marginTop: 20 }}>
+                            No files found
+                        </Text>
+                    }
+                />
             </View>
+            <ImageViewerModal
+                visible={viewerVisible}
+                images={imageFiles}
+                initialIndex={selectedIndex}
+                onClose={() => setViewerVisible(false)}
+            />
+
         </View>
     )
 
