@@ -9,7 +9,6 @@ import RNFS from 'react-native-fs';
 
 export default function HomeScreen() {
 
-  
 
 
 
@@ -18,8 +17,14 @@ export default function HomeScreen() {
 
 
 
+  const dummyItem = ({item}) => {
+    return (
+      <View style={styles.dummyListParent}>
+        <Text style={styles.itemTitle}>{item.title}</Text>
 
-
+      </View>
+    )
+  }
 
 
 
@@ -29,10 +34,12 @@ export default function HomeScreen() {
     <View style={styles.containerStyle}>
 
       <Text>homescreen</Text>
-      <View>
-      
+      <View style={{flex:1}}>
+       
       </View>
     </View>
   )
 
 }
+
+

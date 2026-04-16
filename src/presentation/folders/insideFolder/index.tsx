@@ -93,12 +93,12 @@ export default function InsideFolder({ route }) {
                     }
                 />
             </View>
-            <ImageViewerModal
+            {/* <ImageViewerModal
                 visible={viewerVisible}
                 images={imageFiles}
                 initialIndex={selectedIndex}
                 onClose={() => setViewerVisible(false)}
-            />
+            /> */}
 
         </View>
     )

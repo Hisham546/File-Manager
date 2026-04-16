@@ -9,6 +9,7 @@ import {
 import { Dimensions, Platform, StatusBar } from 'react-native';
 
 import deviceProps from "../../utilities/deviceProps";
+import { scale } from "react-native-size-matters";
 const { deviceHeight, deviceWidth } = deviceProps
 const styles = StyleSheet.create({
 
@@ -43,6 +44,22 @@ const styles = StyleSheet.create({
     },
     folderName:{
         color:'black'
+    },
+    dummyListParent:{
+        flex:1,
+       // backgroundColor:'green'
+    },
+    flatlist:{
+        flex:1,
+       // backgroundColor:'red'
+    },
+    contentContainerStyle:{
+        gap:scale(5)
+    },
+    itemTitle:{
+        color:'red',
+
+        fontSize:10
     }
 
 })
