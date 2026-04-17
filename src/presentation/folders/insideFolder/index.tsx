@@ -5,25 +5,31 @@ import { PermissionsAndroid, Platform } from 'react-native';
 import RNFS from 'react-native-fs';
 import { formatFileSize } from "../../../utilities/helper";
 import ImageViewerModal from "../../../components/imageViewer";
+import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+import { RootStackParamList } from "../../../navigation/types";
+
+type Props = NativeStackScreenProps<
+    RootStackParamList,
+    'InsideFolder'
+>;
+
+
+export default function InsideFolder({ route }: Props) {
 
 
 
-
-export default function InsideFolder({ route }) {
-
-
-    const item = route.params.item
+    const { name, path } = route.params
 
     const [files, setFiles] = useState([])
     const [viewerVisible, setViewerVisible] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
-    console.log(item.path, '...path')
+
 
     useEffect(() => {
         const getFolderContents = async () => {
             try {
-                const contents = await RNFS.readDir(item.path);
+                const contents = await RNFS.readDir(path);
 
                 const formatted = contents.map(file => ({
                     name: file.name,
@@ -34,7 +40,6 @@ export default function InsideFolder({ route }) {
                     modified: file.mtime,
                 }));
 
-                console.log(formatted, '...contents');
                 setFiles(formatted);
 
             } catch (error) {
@@ -42,10 +47,10 @@ export default function InsideFolder({ route }) {
             }
         };
 
-        if (item?.path) {
+        if (path) {
             getFolderContents();
         }
-    }, [item?.path]);
+    }, [path]);
 
 
     const imageFiles = files
