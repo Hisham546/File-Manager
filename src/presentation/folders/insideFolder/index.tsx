@@ -4,9 +4,11 @@ import styles from "./styles";
 import { PermissionsAndroid, Platform } from 'react-native';
 import RNFS from 'react-native-fs';
 import { formatFileSize } from "../../../utilities/helper";
-import ImageViewerModal from "../../../components/imageViewer";
+
 import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
 import { RootStackParamList } from "../../../navigation/types";
+import ImageViewerModal from "../../../shared/components/imageViewer/imageViewer";
+import { FileItem } from "../../../features/files/types";
 
 type Props = NativeStackScreenProps<
     RootStackParamList,
@@ -16,11 +18,9 @@ type Props = NativeStackScreenProps<
 
 export default function InsideFolder({ route }: Props) {
 
-
-
     const { name, path } = route.params
 
-    const [files, setFiles] = useState([])
+    const [files, setFiles] = useState<FileItem[]>([])
     const [viewerVisible, setViewerVisible] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -31,15 +31,15 @@ export default function InsideFolder({ route }: Props) {
             try {
                 const contents = await RNFS.readDir(path);
 
-                const formatted = contents.map(file => ({
-                    name: file.name,
+                const formatted: FileItem[] = contents.map(file => ({
+                    name: file?.name,
                     path: file.path,
                     isFile: file.isFile(),
+                    type: file.isFile() ? 'file' : 'folder',
                     isDirectory: file.isDirectory(),
                     size: file.size,
-                    modified: file.mtime,
+                    modified: file?.mtime,
                 }));
-
                 setFiles(formatted);
 
             } catch (error) {
@@ -82,7 +82,6 @@ export default function InsideFolder({ route }: Props) {
                                     resizeMode="contain"
                                 />
                             )}
-
                             <View>
                                 <Text>{item.name}</Text>
                                 {item.isFile && (
@@ -98,13 +97,12 @@ export default function InsideFolder({ route }: Props) {
                     }
                 />
             </View>
-            {/* <ImageViewerModal
+            <ImageViewerModal
                 visible={viewerVisible}
                 images={imageFiles}
                 initialIndex={selectedIndex}
                 onClose={() => setViewerVisible(false)}
-            /> */}
-
+            />
         </View>
     )
 
