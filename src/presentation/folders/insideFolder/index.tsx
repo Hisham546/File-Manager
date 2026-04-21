@@ -7,8 +7,8 @@ import { formatFileSize } from "../../../utilities/helper";
 
 import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
 import { RootStackParamList } from "../../../navigation/types";
-import ImageViewerModal from "../../../shared/components/imageViewer/imageViewer";
 import { FileItem } from "../../../features/files/types";
+import ImageViewerModal from "../../../shared/components/imageViewer/imageViewer";
 
 type Props = NativeStackScreenProps<
     RootStackParamList,

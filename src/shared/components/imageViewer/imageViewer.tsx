@@ -1,7 +1,7 @@
 import React from 'react';
-import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import Gallery from 'react-native-awesome-gallery';
-
+import { Modal, View, StyleSheet, TouchableOpacity, Text, FlatList, Image } from 'react-native';
+import deviceProps from '../../../utilities/deviceProps';
+const { deviceHeight, deviceWidth } = deviceProps
 export const ImageViewerModal = ({
     visible,
     images = [],
@@ -11,10 +11,19 @@ export const ImageViewerModal = ({
     return (
         <Modal visible={visible} transparent animationType="fade">
             <View style={styles.container}>
-                <Gallery
+                {/* <Gallery
                     data={images}
                     initialIndex={initialIndex}
                     style={{ flex: 1 }}
+                /> */}
+                <FlatList
+                    data={images}
+                    horizontal
+                    pagingEnabled
+                    keyExtractor={(_, i) => i.toString()}
+                    renderItem={({ item }) => (
+                        <Image source={{ uri: item.uri }} style={{ width: deviceWidth, height: deviceHeight }} />
+                    )}
                 />
 
                 <TouchableOpacity style={styles.closeButton} onPress={onClose}>
