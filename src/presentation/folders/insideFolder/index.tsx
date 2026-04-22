@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
 import styles from "./styles";
 import { PermissionsAndroid, Platform } from 'react-native';
 import RNFS from 'react-native-fs';
-import { formatFileSize } from "../../../utilities/helper";
+import { formatFileSize, reduceTextLength } from "../../../utilities/helper";
 
 import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
 import { RootStackParamList } from "../../../navigation/types";
@@ -62,12 +62,15 @@ export default function InsideFolder({ route }: Props) {
     return (
 
         <View style={styles.containerStyle}>
-            <View style={styles.topView}></View>
+            <View style={styles.topView}>
+                
+            </View>
 
             <View style={styles.contentView}>
                 <FlatList
                     data={files}
                     keyExtractor={(item) => item.path}
+                    style={styles.flatlist}
                     renderItem={({ item, index }) => (
                         <TouchableOpacity
                             onPress={() => {
@@ -79,11 +82,11 @@ export default function InsideFolder({ route }: Props) {
                                 <Image
                                     source={{ uri: `file://${item.path}` }}
                                     style={styles.image}
-                                    resizeMode="contain"
+                                    resizeMode="cover"
                                 />
                             )}
                             <View>
-                                <Text>{item.name}</Text>
+                                <Text style={styles.fileTextStyle}>{reduceTextLength(item.name)}</Text>
                                 {item.isFile && (
                                     <Text>{formatFileSize(item.size)}</Text>
                                 )}

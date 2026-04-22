@@ -11,6 +11,7 @@ import { Dimensions, Platform, StatusBar } from 'react-native';
 
 import deviceProps from "../../../utilities/deviceProps";
 import { scale, verticalScale } from "react-native-size-matters";
+import { FONTS } from "../../../shared/constants/fonts";
 const { deviceHeight, deviceWidth } = deviceProps
 const styles = StyleSheet.create({
 
@@ -48,8 +49,8 @@ const styles = StyleSheet.create({
     },
     image: {
         height: scale(40),
-        width: scale(60),
-        borderRadius: 10
+        width: scale(50),
+        borderRadius: 8
     },
     contentView: {
 
@@ -57,12 +58,21 @@ const styles = StyleSheet.create({
     imageView: {
         flexDirection:'row',
         width: deviceProps.deviceWidth,
-        height: verticalScale(50)
+        height: verticalScale(50),
+        gap:scale(6)
+    
     },
     topView: {
         width: deviceProps.deviceWidth,
         height: verticalScale(80),
+       // backgroundColor:'red'
 
+    },
+    fileTextStyle:{
+        fontFamily:FONTS.medium
+    },
+    flatlist:{
+        paddingLeft:scale(5)
     }
 
 })

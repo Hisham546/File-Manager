@@ -42,3 +42,10 @@ export async function requestStoragePermission() {
         return false;
     }
 }
+
+export const reduceTextLength = (name: string) => {
+    if (name.length > 40) {
+        return name.substring(0, 20) + '...';
+    }
+    return name;
+};
