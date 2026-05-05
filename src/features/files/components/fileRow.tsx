@@ -1,0 +1,44 @@
+import React from 'react';
+import { TouchableOpacity, View, Text, Image } from 'react-native';
+import styles from './styles';
+import { FileItem } from '../types';
+import { formatFileSize } from '../../../utilities/helper';
+import { Icon } from '../../../utilities/Icons';
+
+type Props = {
+    item: FileItem;
+    onPress: () => void;
+};
+
+const FileRow = ({ item, onPress }: Props) => {
+    return (
+        <TouchableOpacity onPress={onPress} style={styles.imageView}>
+
+            {item.isFile && (
+                <Image
+                    source={{ uri: `file://${item.path}` }}
+                    style={styles.image}
+                    resizeMode="cover"
+                />
+            )}
+
+            <View style={styles.textContainer}>
+                <Text numberOfLines={1} style={styles.fileTextStyle}>
+                    {item.name}
+                </Text>
+
+                {item.isFile && (
+                    <Text>{formatFileSize(item.size)}</Text>
+                )}
+            </View>
+            <Icon
+                iconFamily="Entypo"
+                size={15}
+                name="dots-three-vertical"
+            />
+
+        </TouchableOpacity>
+    );
+};
+
+export default React.memo(FileRow);

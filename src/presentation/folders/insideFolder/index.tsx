@@ -9,6 +9,8 @@ import { NativeStackScreenProps } from "react-native-screens/lib/typescript/nati
 import { RootStackParamList } from "../../../navigation/types";
 import { FileItem } from "../../../features/files/types";
 import ImageViewerModal from "../../../shared/components/imageViewer/imageViewer";
+import { Icon } from "../../../utilities/Icons";
+import FileRow from "../../../features/files/components/fileRow";
 
 type Props = NativeStackScreenProps<
     RootStackParamList,
@@ -53,6 +55,30 @@ export default function InsideFolder({ route }: Props) {
     }, [path]);
 
 
+    const renderItem = ({ item, index }: { item: FileItem; index: number }) => {
+        return (
+            <FileRow
+                item={item}
+                onPress={() => handleOpen(item, index)}
+            />
+        );
+    };
+
+    const EmptyState = () => (
+        <Text style={{ textAlign: 'center', marginTop: 20 }}>
+            No files found
+        </Text>
+    );
+
+    const handleOpen = (item: FileItem, index: number) => {
+        if (item.isFile) {
+            setSelectedIndex(index);
+            setViewerVisible(true);
+        } else {
+            // navigate into folder later
+        }
+    };
+
     const imageFiles = files
         ?.filter(file => file.isFile && file.name.match(/\.(jpg|jpeg|png)$/i))
         .map(file => ({
@@ -63,41 +89,18 @@ export default function InsideFolder({ route }: Props) {
 
         <View style={styles.containerStyle}>
             <View style={styles.topView}>
-                
             </View>
-
             <View style={styles.contentView}>
                 <FlatList
                     data={files}
                     keyExtractor={(item) => item.path}
-                    style={styles.flatlist}
-                    renderItem={({ item, index }) => (
-                        <TouchableOpacity
-                            onPress={() => {
-                                setSelectedIndex(index);
-                                setViewerVisible(true);
-                            }}
-                            style={styles.imageView}>
-                            {item.isFile && (
-                                <Image
-                                    source={{ uri: `file://${item.path}` }}
-                                    style={styles.image}
-                                    resizeMode="cover"
-                                />
-                            )}
-                            <View>
-                                <Text style={styles.fileTextStyle}>{reduceTextLength(item.name)}</Text>
-                                {item.isFile && (
-                                    <Text>{formatFileSize(item.size)}</Text>
-                                )}
-                            </View>
-                        </TouchableOpacity>
-                    )}
-                    ListEmptyComponent={
-                        <Text style={{ textAlign: 'center', marginTop: 20 }}>
-                            No files found
-                        </Text>
-                    }
+                    renderItem={renderItem}
+                    contentContainerStyle={styles.flatlist}
+                    showsVerticalScrollIndicator={false}
+                    initialNumToRender={10}
+                    windowSize={5}
+                    removeClippedSubviews
+                    ListEmptyComponent={<EmptyState />}
                 />
             </View>
             <ImageViewerModal
