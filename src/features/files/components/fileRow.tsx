@@ -28,7 +28,7 @@ const FileRow = ({ item, onPress }: Props) => {
                 </Text>
 
                 {item.isFile && (
-                    <Text>{formatFileSize(item.size)}</Text>
+                    <Text style={styles.fileSizeStyles}>{formatFileSize(item.size)}</Text>
                 )}
             </View>
             <Icon

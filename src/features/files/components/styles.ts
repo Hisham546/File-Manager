@@ -15,68 +15,37 @@ import { FONTS } from "../../../shared/constants/fonts";
 const { deviceHeight, deviceWidth } = deviceProps
 const styles = StyleSheet.create({
 
-    tabBarIconStyle: {
-        marginTop: 1
-
-    },
-    containerStyle: {
-        flex: 1,
-
-
-    },
-    tabBarLabelStyle: {
-        // fontFamily: fontFamily.P_REGULAR,
-        // fontSize: fontSize.small,
-
-        // color:colors.LIGHT_GOLDEN_YELLOW
-    },
-    iconContainer: {
-        alignItems: 'center',
-    },
-    activeLine: {
-        position: 'absolute',
-        top: -5,
-        width: '50%',
-        height: 2,
-        backgroundColor: '#626262',
-    },
-    dataView: {
-        width: deviceWidth,
-        height: deviceHeight * 0.50
-    },
-    folderName: {
-        color: 'black'
-    },
     image: {
         height: scale(40),
         width: scale(50),
         borderRadius: 8
-    },
-    contentView: {
-
     },
     imageView: {
         flexDirection: 'row',
         width: deviceProps.deviceWidth,
         height: verticalScale(50),
         gap: scale(6),
-        paddingRight:scale(15)
+        paddingRight: scale(15)
     },
     textContainer: {
         flex: 1,
         marginHorizontal: 10,
-    },
-    topView: {
-        width: deviceProps.deviceWidth,
-        height: verticalScale(80),
-        // backgroundColor:'red'
 
     },
     fileTextStyle: {
+        fontSize: scale(12),
+        lineHeight: scale(16),
+        color: '#646766',
         fontFamily: FONTS.medium
     },
     flatlist: {
         paddingLeft: scale(5)
+    },
+    fileSizeStyles: {
+        fontSize: scale(10),
+        lineHeight: scale(14),
+        color: '#8b8d8c',
+        fontFamily: FONTS.regular
     }
 
 })
