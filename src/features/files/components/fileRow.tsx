@@ -11,16 +11,37 @@ type Props = {
 };
 
 const FileRow = ({ item, onPress }: Props) => {
+
+
+
+
+
+
+    const renderFilePreview = () => {
+        if (item.type === 'folder') {
+            return <Icon
+                iconFamily={'Entypo'}
+                size={30}
+                style={styles.folderIcon}
+                name={'folder'}
+            />;
+        }
+
+        return (
+            <Image
+                source={{ uri: `file://${item.path}` }}
+                style={styles.image}
+                resizeMode="cover"
+            />
+        );
+    };
+
+
+
     return (
         <TouchableOpacity onPress={onPress} style={styles.imageView}>
 
-            {item.isFile && (
-                <Image
-                    source={{ uri: `file://${item.path}` }}
-                    style={styles.image}
-                    resizeMode="cover"
-                />
-            )}
+            {renderFilePreview()}
 
             <View style={styles.textContainer}>
                 <Text numberOfLines={1} style={styles.fileTextStyle}>

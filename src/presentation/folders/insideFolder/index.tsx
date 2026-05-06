@@ -18,7 +18,7 @@ type Props = NativeStackScreenProps<
 >;
 
 
-export default function InsideFolder({ route }: Props) {
+export default function InsideFolder({ route, navigation }: Props) {
 
     const { name, path } = route.params
 
@@ -71,11 +71,31 @@ export default function InsideFolder({ route }: Props) {
     );
 
     const handleOpen = (item: FileItem, index: number) => {
-        if (item.isFile) {
+        if (item.type === 'folder') {
+            handleOpenFolder(item);
+            return;
+        }
+
+        if (item.type === 'file') {
+            handleOpenFile(item, index);
+            return;
+        }
+    };
+    const handleOpenFolder = (item: FileItem) => {
+        navigation.push('InsideFolder', {
+            path: item.path,
+            name: item.name,
+        });
+    };
+    const handleOpenFile = (item: FileItem, index: number) => {
+        const isImage = /\.(jpg|jpeg|png)$/i.test(item.name);
+
+        if (isImage) {
             setSelectedIndex(index);
             setViewerVisible(true);
         } else {
-            // navigate into folder later
+            // optional: handle other file types later
+            console.log('Unsupported file type');
         }
     };
 

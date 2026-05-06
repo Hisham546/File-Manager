@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
         lineHeight: scale(14),
         color: '#8b8d8c',
         fontFamily: FONTS.regular
+    },
+    folderIcon:{
+        
     }
 
 })
