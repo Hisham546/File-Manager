@@ -19,12 +19,15 @@ const FileRow = ({ item, onPress }: Props) => {
 
     const renderFilePreview = () => {
         if (item.type === 'folder') {
-            return <Icon
+            return <View style={styles.folderIconWrapper}>
+            
+            <Icon
                 iconFamily={'Entypo'}
                 size={30}
                 style={styles.folderIcon}
                 name={'folder'}
-            />;
+            />
+            </View>
         }
 
         return (

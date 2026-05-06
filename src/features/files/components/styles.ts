@@ -47,8 +47,14 @@ const styles = StyleSheet.create({
         color: '#8b8d8c',
         fontFamily: FONTS.regular
     },
-    folderIcon:{
-        
+    folderIcon: {
+
+    },
+    folderIconWrapper: {
+        justifyContent: 'center',
+        alignItems:'center',
+        height: scale(40),
+        width: scale(50),
     }
 
 })
