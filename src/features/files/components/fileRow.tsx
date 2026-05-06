@@ -14,27 +14,36 @@ const FileRow = ({ item, onPress }: Props) => {
 
 
 
-
+    const isImage = (name: string) =>
+        /\.(jpg|jpeg|png)$/i.test(name);
 
 
     const renderFilePreview = () => {
         if (item.type === 'folder') {
             return <View style={styles.folderIconWrapper}>
-            
-            <Icon
-                iconFamily={'Entypo'}
-                size={30}
-                style={styles.folderIcon}
-                name={'folder'}
-            />
+
+                <Icon
+                    iconFamily={'Entypo'}
+                    size={30}
+                    style={styles.folderIcon}
+                    name={'folder'}
+                />
             </View>
         }
-
+        if (isImage(item.name)) {
+            return (
+                <Image
+                    source={{ uri: `file://${item.path}` }}
+                    style={styles.image}
+                    resizeMode="cover"
+                />
+            );
+        }
         return (
-            <Image
-                source={{ uri: `file://${item.path}` }}
-                style={styles.image}
-                resizeMode="cover"
+            <Icon
+                iconFamily="Entypo"
+                size={30}
+                name="text-document"
             />
         );
     };
@@ -51,7 +60,7 @@ const FileRow = ({ item, onPress }: Props) => {
                     {item.name}
                 </Text>
 
-                {item.isFile && (
+              {item.type === 'file' && (
                     <Text style={styles.fileSizeStyles}>{formatFileSize(item.size)}</Text>
                 )}
             </View>

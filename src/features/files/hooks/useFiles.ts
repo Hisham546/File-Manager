@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { getFiles } from "../services/fileService";
 import { requestStoragePermission } from "../../../utilities/helper";
+import { FileItem } from "../types";
 
 export const useFiles = () => {
-    const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState<FileItem[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -18,9 +19,18 @@ export const useFiles = () => {
             if (!hasPermission) {
                 throw new Error("Permission denied");
             }
-
             const data = await getFiles();
-            setFiles(data);
+
+            const formatted: FileItem[] = data.map(file => ({
+                name: file.name,
+                path: file.path,
+                isFile: file.isFile(),
+                isDirectory: file.isDirectory(),
+                type: file.isFile() ? 'file' : 'folder',
+                size: file.size,
+                modified: file.mtime,
+            }));
+            setFiles(formatted);
         } catch (err) {
             setError(err.message);
         } finally {

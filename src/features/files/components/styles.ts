@@ -22,15 +22,15 @@ const styles = StyleSheet.create({
     },
     imageView: {
         flexDirection: 'row',
+        alignItems: 'center',
         width: deviceProps.deviceWidth,
         height: verticalScale(50),
         gap: scale(6),
-        paddingRight: scale(15)
+        paddingHorizontal:  scale(10),
     },
     textContainer: {
         flex: 1,
         marginHorizontal: 10,
-
     },
     fileTextStyle: {
         fontSize: scale(12),
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     },
     folderIconWrapper: {
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
         height: scale(40),
         width: scale(50),
     }

@@ -46,13 +46,27 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     folderIcon: {
-        color: '#09637E',
-        paddingLeft:scale(5)
+        // color: '#09637E',
+        // paddingLeft: scale(5)
     },
     folderParent: {
         flexDirection: 'row',
-        height: verticalScale(30),
-        gap:scale(20)
+        //height: verticalScale(30),
+        gap: scale(20),
+        paddingBottom: scale(5),
+        paddingHorizontal: scale(10),
+
+    },
+    image: {
+           height: scale(40),
+        width: scale(50),
+        borderRadius: 8
+    },
+    folderIconWrapper: {
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // height: scale(40),
+        // width: scale(50),
     }
 
 })

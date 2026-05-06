@@ -11,6 +11,7 @@ import { FileItem } from "../../../features/files/types";
 import ImageViewerModal from "../../../shared/components/imageViewer/imageViewer";
 import { Icon } from "../../../utilities/Icons";
 import FileRow from "../../../features/files/components/fileRow";
+import { getFileAction } from "../../../features/files/utils/fileHandlers";
 
 type Props = NativeStackScreenProps<
     RootStackParamList,
@@ -59,7 +60,7 @@ export default function InsideFolder({ route, navigation }: Props) {
         return (
             <FileRow
                 item={item}
-                onPress={() => handleOpen(item, index)}
+                onPress={() => onItemPress(item, index)}
             />
         );
     };
@@ -70,34 +71,33 @@ export default function InsideFolder({ route, navigation }: Props) {
         </Text>
     );
 
-    const handleOpen = (item: FileItem, index: number) => {
-        if (item.type === 'folder') {
-            handleOpenFolder(item);
+
+
+    const onItemPress = (item: FileItem, index: number) => {
+        const action = getFileAction(item);
+
+        if (action === 'folder') {
+            navigation.push('InsideFolder', {
+                path: item.path,
+                name: item.name,
+            });
             return;
         }
 
-        if (item.type === 'file') {
-            handleOpenFile(item, index);
-            return;
-        }
-    };
-    const handleOpenFolder = (item: FileItem) => {
-        navigation.push('InsideFolder', {
-            path: item.path,
-            name: item.name,
-        });
-    };
-    const handleOpenFile = (item: FileItem, index: number) => {
-        const isImage = /\.(jpg|jpeg|png)$/i.test(item.name);
+        if (action === 'image') {
+            const imgIndex = imageFiles.findIndex(
+                img => img.uri === `file://${item.path}`
+            );
 
-        if (isImage) {
-            setSelectedIndex(index);
+            setSelectedIndex(imgIndex);
             setViewerVisible(true);
-        } else {
-            // optional: handle other file types later
-            console.log('Unsupported file type');
+            return;
         }
+
+        console.log('Unsupported file');
     };
+
+
 
     const imageFiles = files
         ?.filter(file => file.isFile && file.name.match(/\.(jpg|jpeg|png)$/i))

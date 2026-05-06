@@ -1,4 +1,5 @@
 import { PermissionsAndroid, Platform } from "react-native";
+import { FileItem } from "../features/files/types";
 
 export const formatFileSize = (bytes: number) => {
     if (bytes === 0) return '0 B';
@@ -49,3 +50,5 @@ export const reduceTextLength = (name: string) => {
     }
     return name;
 };
+
+

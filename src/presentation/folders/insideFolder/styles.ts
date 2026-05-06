@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         fontFamily: FONTS.medium
     },
     flatlist: {
-        paddingLeft: scale(5)
+       // paddingLeft: scale(5)
     }
 
 })

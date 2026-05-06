@@ -17,9 +17,7 @@ const styles = StyleSheet.create({
 
     },
     containerStyle: {
-        flex:1,
-
-   
+        flex:1,   
     },
     tabBarLabelStyle: {
         // fontFamily: fontFamily.P_REGULAR,
