@@ -17,18 +17,11 @@ const styles = StyleSheet.create({
 
     tabBarIconStyle: {
         marginTop: 1
-
     },
     containerStyle: {
         flex: 1,
-
-
     },
     tabBarLabelStyle: {
-        // fontFamily: fontFamily.P_REGULAR,
-        // fontSize: fontSize.small,
-
-        // color:colors.LIGHT_GOLDEN_YELLOW
     },
     iconContainer: {
         alignItems: 'center',
@@ -53,14 +46,14 @@ const styles = StyleSheet.create({
         borderRadius: 8
     },
     contentView: {
-
+        flex: 1
     },
     imageView: {
         flexDirection: 'row',
         width: deviceProps.deviceWidth,
         height: verticalScale(50),
         gap: scale(6),
-        paddingRight:scale(15)
+        paddingRight: scale(15)
     },
     textContainer: {
         flex: 1,
@@ -69,15 +62,22 @@ const styles = StyleSheet.create({
     topView: {
         width: deviceProps.deviceWidth,
         height: verticalScale(80),
-        // backgroundColor:'red'
-
     },
     fileTextStyle: {
         fontFamily: FONTS.medium
     },
     flatlist: {
-       // paddingLeft: scale(5)
-    }
+        flexGrow: 1
+    },
+    emptyText: {
+        fontFamily: FONTS.regular
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
 
 })
 

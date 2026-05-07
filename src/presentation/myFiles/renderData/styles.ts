@@ -9,6 +9,7 @@ import {
 import { Dimensions, Platform, StatusBar } from 'react-native';
 import deviceProps from "../../../utilities/deviceProps";
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import { FONTS } from "../../../shared/constants/fonts";
 
 const { deviceHeight, deviceWidth } = deviceProps
 const styles = StyleSheet.create({
@@ -43,7 +44,10 @@ const styles = StyleSheet.create({
         height: deviceHeight * 0.50
     },
     folderName: {
-        color: 'black'
+        fontSize: scale(12),
+        lineHeight: scale(16),
+        color: '#646766',
+        fontFamily: FONTS.medium
     },
     folderIcon: {
         // color: '#09637E',
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
 
     },
     image: {
-           height: scale(40),
+        height: scale(40),
         width: scale(50),
         borderRadius: 8
     },

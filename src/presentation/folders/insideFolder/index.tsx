@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
+import { View, TouchableOpacity, Text, FlatList, Image, Alert } from "react-native";
 import styles from "./styles";
 import { PermissionsAndroid, Platform } from 'react-native';
 import RNFS from 'react-native-fs';
@@ -32,6 +32,7 @@ export default function InsideFolder({ route, navigation }: Props) {
     useEffect(() => {
         const getFolderContents = async () => {
             try {
+
                 const contents = await RNFS.readDir(path);
 
                 const formatted: FileItem[] = contents.map(file => ({
@@ -46,7 +47,17 @@ export default function InsideFolder({ route, navigation }: Props) {
                 setFiles(formatted);
 
             } catch (error) {
-                console.error('Error reading directory:', error);
+                console.log('Error reading directory:', error);
+                Alert.alert(
+                    'Access Denied',
+                    'This folder cannot be accessed.',
+                    [
+                        {
+                            text: 'OK',
+                            onPress: () => navigation.goBack(),
+                        },
+                    ]
+                );
             }
         };
 
@@ -64,13 +75,13 @@ export default function InsideFolder({ route, navigation }: Props) {
             />
         );
     };
-
     const EmptyState = () => (
-        <Text style={{ textAlign: 'center', marginTop: 20 }}>
-            No files found
-        </Text>
+        <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>
+                This folder is empty
+            </Text>
+        </View>
     );
-
 
 
     const onItemPress = (item: FileItem, index: number) => {
@@ -108,8 +119,10 @@ export default function InsideFolder({ route, navigation }: Props) {
     return (
 
         <View style={styles.containerStyle}>
-            <View style={styles.topView}>
-            </View>
+            {files?.length > 0 && (
+                <View style={styles.topView}>
+                </View>
+            )}
             <View style={styles.contentView}>
                 <FlatList
                     data={files}
